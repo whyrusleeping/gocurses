@@ -100,6 +100,15 @@ func (window *Window) Refresh() {
     C.wrefresh(window.cwin)
 }
 
+// Resize the given window.
+func (window *Window) Resize(rows, cols int) {
+	C.wresize(window.cwin, C.int(rows),C.int(cols))
+}
+
+func ResizeTerm(rows, cols int) {
+	C.resizeterm(C.int(rows), C.int(cols))
+}
+
 // Finalizes curses.
 func End() {
     C.endwin()
@@ -145,6 +154,10 @@ func (window *Window) Getmaxyx() (row, col int) {
 
 func (window *Window) Setscrreg(top, bot int) {
     C.wsetscrreg(window.cwin, C.int(top), C.int(bot))
+}
+
+func (window *Window) Move(y, x int) {
+	C.wmove(window.cwin, C.int(y), C.int(x))
 }
 
 func Addstr(str ...interface{}) {
